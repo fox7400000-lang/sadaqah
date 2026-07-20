@@ -4,245 +4,45 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>صدقة جارية</title>
-    <!-- خطوط جوجل العربية -->
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg-color: #0b1329;
-            --card-bg: #121e3d;
-            --accent-color: #f59e0b;
-            --text-color: #f8fafc;
-            --text-muted: #94a3b8;
-            --green-btn: #10b981;
-        }
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Cairo', sans-serif;
-        }
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            min-height: 100vh;
+            background-color: #0b1329;
+            color: #f8fafc;
+            font-family: 'Cairo', sans-serif;
+            margin: 0;
+            padding: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 20px;
         }
-        header {
+        .container {
+            max-width: 600px;
+            width: 100%;
+            background: #121e3d;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             text-align: center;
-            margin-bottom: 25px;
-            animation: fadeInDown 0.8s ease;
         }
         h1 {
-            color: var(--accent-color);
-            font-size: 2rem;
-            margin-bottom: 10px;
-            text-shadow: 0 2px 10px rgba(245, 158, 11, 0.3);
+            color: #f59e0b;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
         }
-        .duaa-box {
-            background: rgba(18, 30, 61, 0.7);
-            border: 1px solid rgba(245, 158, 11, 0.2);
-            padding: 15px 20px;
-            border-radius: 15px;
-            max-width: 600px;
-            font-size: 0.95rem;
+        p {
+            color: #94a3b8;
             line-height: 1.6;
-            color: var(--text-muted);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(8px);
-        }
-        /* الأزرار التبادلية */
-        .nav-tabs {
-            display: flex;
-            gap: 8px;
-            overflow-x: auto;
-            max-width: 100%;
-            padding: 10px 0;
-            margin-bottom: 20px;
-            scrollbar-width: none;
-        }
-        .nav-tabs::-webkit-scrollbar { display: none; }
-        .tab-btn {
-            background: var(--card-bg);
-            border: 1px solid rgba(255,255,255,0.05);
-            color: var(--text-muted);
-            padding: 10px 18px;
-            border-radius: 12px;
-            white-space: nowrap;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .tab-btn.active, .tab-btn:hover {
-            background: var(--accent-color);
-            color: #000;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4);
-            transform: translateY(-2px);
-        }
-        /* المحتوى الرئيسي 3D Card */
-        .content-card {
-            background: var(--card-bg);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 25px;
-            width: 100%;
-            max-width: 600px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
-            transform-style: preserve-3d;
-            transition: transform 0.4s ease;
-            margin-bottom: 25px;
-            display: none;
-            animation: fadeIn 0.5s ease forwards;
-        }
-        .content-card.active { display: block; }
-        
-        .section-title {
-            color: var(--accent-color);
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        /* عناصر الأقسام */
-        .form-control-group {
-            margin-bottom: 15px;
-        }
-        label { display: block; margin-bottom: 5px; font-size: 0.9rem; color: var(--text-muted); }
-        select, input {
-            width: 100%;
-            padding: 12px;
-            background: #0b1329;
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #fff;
-            border-radius: 10px;
             font-size: 1rem;
-            outline: none;
-        }
-        .quran-text-box {
-            background: #0b1329;
-            padding: 20px;
-            border-radius: 12px;
-            text-align: center;
-            font-size: 1.3rem;
-            line-height: 2.2;
-            color: #f1f5f9;
-            margin-top: 15px;
-            border: 1px solid rgba(245,158,11,0.2);
-        }
-        .dhikr-item {
-            background: rgba(255,255,255,0.03);
-            padding: 12px 15px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            font-size: 0.950rem;
-            border-right: 4px solid var(--accent-color);
-        }
-        /* زر المشاركة السفلي */
-        .share-btn {
-            background: var(--green-btn);
-            color: #fff;
-            padding: 14px 25px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            box-shadow: 0 5px 20px rgba(16, 185, 129, 0.4);
-            transition: transform 0.2s;
-            margin-top: 10px;
-        }
-        .share-btn:active { transform: scale(0.95); }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-15px); }
-            to { opacity: 1; transform: translateY(0); }
         }
     </style>
 </head>
 <body>
 
-    <header>
+    <div class="container">
         <h1>صدقة جارية</h1>
-        <div class="duaa-box">
-            اللهم اغفر لموتانا وموتى المسلمين وارحمهم، وأكرم نزلهم، ووسع مدخلهم، واجعل قبورهم روضة من رياض الجنة.
-        </div>
-    </header>
-
-    <!-- الأزرار التبادلية -->
-    <div class="nav-tabs">
-        <button class="tab-btn active" onclick="switchTab('quran', this)">📖 المصحف والورد</button>
-        <button class="tab-btn" onclick="switchTab('mishary', this)">🎧 صوت المنشاوي</button>
-        <button class="tab-btn" onclick="switchTab('adhkar', this)">📿 أذكار الصباح والمساء</button>
-        <button class="tab-btn" onclick="switchTab('prayer', this)">🤲 أدعية الصلاة</button>
+        <p>اللهم اغفر لموتانا وموتى المسلمين، واجعل هذا العمل صدقة جارية ترحم بها أمواتنا يا رب العالمين.</p>
     </div>
 
-    <!-- 1. قسم المصحف -->
-    <div id="quran" class="content-card active">
-        <div class="section-title">المصحف الشريف - الورد اليومي</div>
-        <div class="form-control-group">
-            <label>اختر الجزء:</label>
-            <select id="juzSelect">
-                <option>الجزء الأول (الصفحة 1 - 21)</option>
-                <option>الجزء الثاني (الصفحة 22 - 41)</option>
-                <option>الجزء الثالث (الصفحة 42 - 61)</option>
-                <option>اختر باقي الأجزاء حسب وردك اليومي...</option>
-            </select>
-        </div>
-        <div class="form-control-group">
-            <label>رقم الصفحة الحالية:</label>
-            <input type="number" value="1" min="1" max="604">
-        </div>
-        <div class="quran-text-box">
-            بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ<br>
-            الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ ﴿١﴾ الرَّحْمَٰنِ الرَّحِيمِ ﴿٢﴾ مَالِكِ يَوْمِ الدِّينِ ﴿٣﴾
-        </div>
-    </div>
-
-    <!-- 2. قسم صوت المنشاوي -->
-    <div id="mishary" class="content-card">
-        <div class="section-title">القرآن الكريم كاملًا - بصوت الشيخ المنشاوي</div>
-        <p style="color: var(--text-muted); text-align: center; margin-bottom: 15px; font-size: 0.9rem;">استمع لقرآن خاشع ومبرك بصوت القارئ الشيخ محمد صديق المنشاوي</p>
-        <audio controls style="width: 100%; border-radius: 10px; margin-bottom: 15px;">
-            <source src="https://server11.mp3quran.net/minsh/Sura_Al-Fatihah.mp3" type="audio/mpeg">
-            متصفحك لا يدعم مشغل الصوتييات
-        </audio>
-        <div style="font-size: 0.85rem; color: var(--accent-color); text-align: center;">جودة عالية (مصحف مرتل كامل)</div>
-    </div>
-
-    <!-- 3. قسم أذكار الصباح والمساء -->
-    <div id="adhkar" class="content-card">
-        <div class="section-title">أذكار الصباح والمساء</div>
-        <div class="dhikr-item">🌿 "اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك..." (تقال 3 مرات)</div>
-        <div class="dhikr-item">☀️ "رضيت بالله رباً، وبالإسلام ديناً، وبمحمد صلى الله عليه وسلم نبياً" (تقال 3 مرات)</div>
-        <div class="dhikr-item">🛡️ "بِسْمِ اللَّهِ الَّذِي لَا يَضُرِّ مع اسمي شيء في الأرض ولا في السماء..." (تقال 3 مرات)</div>
-    </div>
-
-    <!-- 4. ركن الصلاة والأدعية -->
-    <div id="prayer" class="content-card">
-        <div class="section-title">ركن الصلاة وأدعية ما بعد التسليم</div>
-        <div class="dhikr-item">✨ "استغفر الله، استغفر الله، استغفر الله، اللهم أنت السلام ومنك السلام، تباركت يا ذا الجلال والإكرام."</div>
-        <div class="dhikr-item">✨ "لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير..."</div>
-        <div class="dhikr-item">✨ "اللهم أعني على ذكرك وشكرك وحسن عبادتك."</div>
-    </div>
-
-    <!-- زر المشاركة -->
-    <a href="#" class="share-btn" onclick="navigator.clipboard.writeText(window.location.href); alert('تم نسخ رابط الموقع، جزاك الله خيراً!'); return false;">
-        📱 شارك الموقع لتشاركهم الأجر
-    </a>
-
-    <script>
-        function switchTab(tabId, btn) {
-            document.querySelectorAll('.content-card').forEach(card => card.classList.remove('active'));
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-            btn.classList.add('active');
-        }
-    </script>
 </body>
 </html>
