@@ -3,11 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- اسم الموقع اللي بيظهر فوق في التبويب (تقدر تغيره هنا) -->
     <title>صدقة جارية | القرآن الكريم والأذكار</title>
-    
-    <!-- أيقونة الموقع (الصورة اللي بتظهر جنب الاسم) -->
     <link rel="icon" type="image/png" href="https://cdn-icons-png.flaticon.com/512/2904/2904835.png">
 
     <!-- Google Fonts -->
@@ -186,6 +182,7 @@
             text-align: center;
             font-size: 1.2rem;
             font-weight: bold;
+            outline: none;
         }
 
         /* Counter Section */
@@ -287,7 +284,6 @@
 <body>
 
     <header>
-        <!-- صورة/لوجو إسلامي في أعلى الموقع -->
         <img src="https://cdn-icons-png.flaticon.com/512/2904/2904835.png" alt="مصحف" class="site-logo">
         <h1>صدقة جارية</h1>
         <p>اللهم اغفر لموتانا وموتى المسلمين وارحمهم، وأكرم نزلهم، ووسع مدخلهم، واجعل قبورهم روضة من رياض الجنة.</p>
@@ -317,26 +313,23 @@
             </div>
         </div>
 
-        <!-- 2. TAB: AUDIO MINSHAWI -->
+        <!-- 2. TAB: AUDIO MINSHAWI (كل سور القرآن متاحة للاختيار) -->
         <div id="audio" class="tab-content">
             <div class="card">
                 <h3 style="color: var(--accent-gold);">القرآن الكريم - بصوت الشيخ المنشاوي</h3>
-                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">تلاوة خاشعة ومباركة من سورة يس</p>
+                <p id="current-playing-surah" style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">اختر السورة للاستماع إليها تلاوة خاشعة</p>
+                
+                <select id="audio-surah-select" onchange="changeAudioBySelect(this.value)" style="margin-top: 15px;">
+                    <option value="">اختر السورة للاستماع إليها...</option>
+                </select>
+
                 <audio controls id="minshawi-player">
-                    <source src="https://server10.mp3quran.net/minsh/036.mp3" type="audio/mpeg">
                     متصفحك لا يدعم مشغل الصوت.
                 </audio>
-                <div class="counter-options" style="margin-top: 15px;">
-                    <button class="opt-btn" onclick="changeAudio('036', 'سورة يس')">سورة يس</button>
-                    <button class="opt-btn" onclick="changeAudio('067', 'سورة الملك')">سورة الملك</button>
-                    <button class="opt-btn" onclick="changeAudio('018', 'سورة الكهف')">سورة الكهف</button>
-                    <button class="opt-btn" onclick="changeAudio('056', 'سورة الواقعة')">سورة الواقعة</button>
-                    <button class="opt-btn" onclick="changeAudio('055', 'سورة الرحمن')">سورة الرحمن</button>
-                </div>
             </div>
         </div>
 
-        <!-- 3. TAB: WARD & KHATMA TRACKER -->
+        <!-- 3. TAB: WARD & KHATMA TRACKER (معرفة الصفحة والجزء والمتابعة) -->
         <div id="ward" class="tab-content">
             <div class="card tracker-box">
                 <h3 style="color: var(--accent-gold);">متابع الورد اليومي والختمة</h3>
@@ -405,16 +398,25 @@
             event.currentTarget.classList.add('active');
         }
 
-        // Populate Surahs List
+        // Populate Surahs Lists (Reading & Audio)
         const surahSelect = document.getElementById('surah-select');
+        const audioSurahSelect = document.getElementById('audio-surah-select');
+
         fetch('https://api.alquran.cloud/v1/surah')
             .then(res => res.json())
             .then(data => {
                 data.data.forEach(s => {
+                    // For Reading
                     const opt = document.createElement('option');
                     opt.value = s.number;
                     opt.textContent = `${s.number}. سورة ${s.name} (${s.numberOfAyahs} آية)`;
                     surahSelect.appendChild(opt);
+
+                    // For Audio (All Surahs)
+                    const optAudio = document.createElement('option');
+                    optAudio.value = s.number;
+                    optAudio.textContent = `${s.number}. سورة ${s.name}`;
+                    audioSurahSelect.appendChild(optAudio);
                 });
             });
 
@@ -439,11 +441,16 @@
                 });
         }
 
-        // Change Minshawi Audio
-        function changeAudio(surahCode, surahName) {
+        // Change Minshawi Audio (All Surahs dynamically formatted with 3 digits e.g. 001, 036)
+        function changeAudioBySelect(surahNum) {
+            if(!surahNum) return;
+            let formattedNum = String(surahNum).padStart(3, '0');
             const player = document.getElementById('minshawi-player');
-            player.src = `https://server10.mp3quran.net/minsh/${surahCode}.mp3`;
+            player.src = `https://server10.mp3quran.net/minsh/${formattedNum}.mp3`;
             player.play();
+            
+            const selectedText = audioSurahSelect.options[audioSurahSelect.selectedIndex].text;
+            document.getElementById('current-playing-surah').innerText = `تلاوة خاشعة ومباركة - ${selectedText}`;
         }
 
         // Tracker Progress
