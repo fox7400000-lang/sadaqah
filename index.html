@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>صدقة جارية - لموتانا وموتى المسلمين</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #0b1329;
+            --card-bg: rgba(23, 37, 84, 0.6);
+            --accent-gold: #fbbf24;
+            --accent-blue: #38bdf8;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 15px;
+            padding-bottom: 80px;
+            background-image: radial-gradient(circle at 50% 0%, #1e293b 0%, #0b1329 80%);
+        }
+
+        header {
+            text-align: center;
+            margin: 15px 0 20px;
+            max-width: 650px;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            color: var(--accent-gold);
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        /* Navigation Tabs */
+        .tabs {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+            max-width: 600px;
+            margin-bottom: 20px;
+            background: rgba(15, 23, 42, 0.8);
+            padding: 5px;
+            border-radius: 15px;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 10px 6px;
+            border: none;
+            background: transparent;
+            color: var(--text-muted);
+            font-weight: 600;
+            font-size: 0.85rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        .tab-btn.active {
+            background: var(--accent-gold);
+            color: #0b1329;
+            font-weight: 700;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+        }
+
+        .tab-content {
+            display: none;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .tab-content.active {
+            display: flex;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Quran Reader & Select */
+        select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 12px;
+            background: #1e293b;
+            color: var(--text-main);
+            border: 1px solid var(--accent-gold);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            outline: none;
+        }
+
+        .surah-text {
+            font-family: 'Amiri', serif;
+            font-size: 1.35rem;
+            line-height: 2.3;
+            color: #f8fafc;
+            text-align: justify;
+            max-height: 400px;
+            overflow-y: auto;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Tracker Section */
+        .tracker-box {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            align-items: center;
+        }
+
+        .tracker-input {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .tracker-input input {
+            width: 90px;
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid var(--accent-blue);
+            background: #0f172a;
+            color: white;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        /* Counter Section */
+        .count-title {
+            font-size: 1.1rem;
+            color: var(--accent-blue);
+            margin-bottom: 10px;
+        }
+
+        .count-num {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 10px 0;
+        }
+
+        .btn-counter {
+            background: linear-gradient(135deg, #0284c7, #0369a1);
+            color: white;
+            border: none;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.3);
+            margin: 10px auto;
+        }
+
+        .counter-options {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+
+        .opt-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-color);
+            color: var(--text-muted);
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            cursor: pointer;
+        }
+
+        /* Audio Player */
+        audio {
+            width: 100%;
+            margin-top: 15px;
+            border-radius: 10px;
+        }
+
+        /* Dua Cards */
+        .dua-box {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+            margin-bottom: 20px;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-gold {
+            background: var(--accent-gold);
+            color: #0b1329;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .btn-share {
+            background: #25d366;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.95rem;
+            margin-top: 20px;
+        }
+
+        footer {
+            margin-top: auto;
+            padding-top: 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>صدقة جارية</h1>
+        <p>اللهم اغفر لموتانا وموتى المسلمين وارحمهم، وأكرم نزلهم، ووسع مدخلهم، واجعل قبورهم روضة من رياض الجنة.</p>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <div class="tabs">
+        <button class="tab-btn active" onclick="switchTab('quran-read')">📖 المصحف كاملاً</button>
+        <button class="tab-btn" onclick="switchTab('audio')">🎧 صوت المنشاوي</button>
+        <button class="tab-btn" onclick="switchTab('ward')">📌 الورد والختمة</button>
+        <button class="tab-btn" onclick="switchTab('dhikr')">📿 العداد</button>
+        <button class="tab-btn" onclick="switchTab('dua')">🤲 أدعية</button>
+    </div>
+
+    <div class="container">
+
+        <!-- 1. TAB: FULL QURAN READ -->
+        <div id="quran-read" class="tab-content active">
+            <div class="card">
+                <h3 style="color: var(--accent-gold); margin-bottom: 12px;">المصحف الشريف كامل</h3>
+                <select id="surah-select" onchange="fetchSurah(this.value)">
+                    <option value="">اختر السورة لقراءتها...</option>
+                </select>
+                <div class="surah-text" id="surah-container">
+                    اختر سورة من القائمة أعلاه لقراءة السورة كاملة بآياتها مباركة.
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. TAB: AUDIO MINSHAWI -->
+        <div id="audio" class="tab-content">
+            <div class="card">
+                <h3 style="color: var(--accent-gold);">القرآن الكريم - بصوت الشيخ المنشاوي</h3>
+                <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 5px;">تلاوة خاشعة ومباركة من سورة يس</p>
+                <audio controls id="minshawi-player">
+                    <source src="https://server10.mp3quran.net/minsh/036.mp3" type="audio/mpeg">
+                    متصفحك لا يدعم مشغل الصوت.
+                </audio>
+                <div class="counter-options" style="margin-top: 15px;">
+                    <button class="opt-btn" onclick="changeAudio('036', 'سورة يس')">سورة يس</button>
+                    <button class="opt-btn" onclick="changeAudio('067', 'سورة الملك')">سورة الملك</button>
+                    <button class="opt-btn" onclick="changeAudio('018', 'سورة الكهف')">سورة الكهف</button>
+                    <button class="opt-btn" onclick="changeAudio('056', 'سورة الواقعة')">سورة الواقعة</button>
+                    <button class="opt-btn" onclick="changeAudio('055', 'سورة الرحمن')">سورة الرحمن</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. TAB: WARD & KHATMA TRACKER -->
+        <div id="ward" class="tab-content">
+            <div class="card tracker-box">
+                <h3 style="color: var(--accent-gold);">متابع الورد اليومي والختمة</h3>
+                <p style="font-size: 0.9rem; color: var(--text-muted);">سجّل رقم الصفحة والجزء الذي وصلت إليه ليُحفظ لك أوتوماتيكياً:</p>
+                
+                <div class="tracker-input">
+                    <label>الصفحة الحالية:</label>
+                    <input type="number" id="page-num" min="1" max="604" onchange="saveProgress()" placeholder="1">
+                    <span>من 604</span>
+                </div>
+
+                <div class="tracker-input">
+                    <label>الجزء الحالي:</label>
+                    <input type="number" id="juz-num" min="1" max="30" onchange="saveProgress()" placeholder="1">
+                    <span>من 30</span>
+                </div>
+
+                <p id="save-msg" style="color: var(--accent-blue); font-size: 0.85rem; display: none;">تم حفظ مستواك بنجاح! ✨</p>
+            </div>
+        </div>
+
+        <!-- 4. TAB: DHIKR COUNTER -->
+        <div id="dhikr" class="tab-content">
+            <div class="card">
+                <div class="count-title" id="phrase-display">أستغفر الله العظيم وأتوب إليه</div>
+                <div class="count-num" id="count-val">0</div>
+                <button class="btn-counter" onclick="addCount()">سبّح</button>
+
+                <div class="counter-options">
+                    <button class="opt-btn" onclick="setPhrase('أستغفر الله العظيم وأتوب إليه')">استغفار</button>
+                    <button class="opt-btn" onclick="setPhrase('سبحان الله وبحمده ، سبحان الله العظيم')">تسبيح</button>
+                    <button class="opt-btn" onclick="setPhrase('اللهم صلِّ وسلم على نبينا محمد')">صلاة على النبي</button>
+                    <button class="opt-btn" onclick="setPhrase('لا إله إلا الله وحده لا شريك له')">التوحيد</button>
+                    <button class="opt-btn" onclick="resetCounter()" style="color:#f87171;">تصفير</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. TAB: DUA -->
+        <div id="dua" class="tab-content">
+            <div class="card">
+                <div class="dua-box" id="dua-text">
+                    "اللهم اغفر لموتانا وموتى المسلمين واجمعنا بهم في جنات النعيم."
+                </div>
+                <button class="btn-gold" onclick="randomDua()">دعاء آخر 🤲</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Share Button -->
+    <div style="text-align: center;">
+        <button class="btn-share" onclick="shareSite()">📲 شارك الموقع لتشاركهم الأجر</button>
+    </div>
+
+    <footer>
+        <p>صدقة جارية <span>•</span> تقبل الله منا ومنكم صالح الأعمال</p>
+    </footer>
+
+    <script>
+        // Tab Switcher
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+
+        // Populate Surahs List
+        const surahSelect = document.getElementById('surah-select');
+        fetch('https://api.alquran.cloud/v1/surah')
+            .then(res => res.json())
+            .then(data => {
+                data.data.forEach(s => {
+                    const opt = document.createElement('option');
+                    opt.value = s.number;
+                    opt.textContent = `${s.number}. سورة ${s.name} (${s.numberOfAyahs} آية)`;
+                    surahSelect.appendChild(opt);
+                });
+            });
+
+        // Fetch Full Surah Text
+        function fetchSurah(surahNum) {
+            if(!surahNum) return;
+            const container = document.getElementById('surah-container');
+            container.innerHTML = "جاري تحميل السورة الكريمة...";
+
+            fetch(`https://api.alquran.cloud/v1/surah/${surahNum}`)
+                .then(res => res.json())
+                .then(data => {
+                    let textHtml = "بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ<br><br>";
+                    data.data.ayahs.forEach(a => {
+                        let text = a.text;
+                        if (a.numberInSurah === 1 && surahNum != 1 && surahNum != 9) {
+                            text = text.replace("بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ", "");
+                        }
+                        textHtml += `${text} <span style="color:var(--accent-gold);">﴿${a.numberInSurah}﴾</span> `;
+                    });
+                    container.innerHTML = textHtml;
+                });
+        }
+
+        // Change Minshawi Audio
+        function changeAudio(surahCode, surahName) {
+            const player = document.getElementById('minshawi-player');
+            player.src = `https://server10.mp3quran.net/minsh/${surahCode}.mp3`;
+            player.play();
+        }
+
+        // Tracker Progress
+        function saveProgress() {
+            const p = document.getElementById('page-num').value;
+            const j = document.getElementById('juz-num').value;
+            localStorage.setItem('quran_page', p);
+            localStorage.setItem('quran_juz', j);
+            
+            const msg = document.getElementById('save-msg');
+            msg.style.display = 'block';
+            setTimeout(() => msg.style.display = 'none', 2500);
+        }
+
+        function loadProgress() {
+            const p = localStorage.getItem('quran_page');
+            const j = localStorage.getItem('quran_juz');
+            if(p) document.getElementById('page-num').value = p;
+            if(j) document.getElementById('juz-num').value = j;
+        }
+        loadProgress();
+
+        // Dhikr Counter
+        let count = parseInt(localStorage.getItem('full_dhikr_count')) || 0;
+        document.getElementById('count-val').innerText = count;
+
+        function addCount() {
+            count++;
+            document.getElementById('count-val').innerText = count;
+            localStorage.setItem('full_dhikr_count', count);
+            if (navigator.vibrate) navigator.vibrate(35);
+        }
+
+        function resetCounter() {
+            count = 0;
+            document.getElementById('count-val').innerText = 0;
+            localStorage.setItem('full_dhikr_count', 0);
+        }
+
+        function setPhrase(p) {
+            document.getElementById('phrase-display').innerText = p;
+            resetCounter();
+        }
+
+        // Duas Array
+        const duasList = [
+            "اللهم اغفر لموتانا وموتى المسلمين واجعل قبورهم روضة من رياض الجنة.",
+            "اللهم اغسلهم بالماء والثلج والبرد ونقهم من الخطايا كما ينقى الثوب الأبيض من الدنس.",
+            "اللهم إنهم كانوا يشهدون أنك لا إله إلا أنت وأن محمداً عبدك ورسولك فاغفر لهم وارحمهم.",
+            "اللهم جازهم عن الإحسان إحساناً وعن الإساءة عفواً وغفراناً.",
+            "اللهم اجمعنا بهم في جنات النعيم من غير حساب ولا سابقة عذاب.",
+            "اللهم أنزل على قبورهم الضياء والنور والفسحة والسرور."
+        ];
+
+        function randomDua() {
+            const idx = Math.floor(Math.random() * duasList.length);
+            document.getElementById('dua-text').innerText = `"${duasList[idx]}"`;
+        }
+
+        // Share Web
+        function shareSite() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'صدقة جارية',
+                    text: 'موقع صدقة جارية - أذكار ومصحف وأدعية لموتانا وموتى المسلمين',
+                    url: window.location.href
+                });
+            } else {
+                alert('قم بنسخ رابط الصفحة وشاركه مع أقاربك وأصدقائك');
+            }
+        }
+    </script>
+</body>
+  </html>
+  
